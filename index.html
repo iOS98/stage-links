@@ -60,13 +60,13 @@
     position:relative;z-index:1;max-width:440px;margin:0 auto;
     min-height:100vh;min-height:100svh;
     display:flex;flex-direction:column;justify-content:center;
-    padding:max(18px,env(safe-area-inset-top)) 16px max(14px,env(safe-area-inset-bottom));
+    padding:calc(env(safe-area-inset-top) + 40px) 16px max(14px,env(safe-area-inset-bottom));
     gap:clamp(10px,1.7vh,18px);
   }
 
   .hero{text-align:center}
   .hero img{width:clamp(130px,38vw,165px);height:auto;display:block;margin:0 auto 6px}
-  .tagline{font-family:"Montserrat",sans-serif;font-weight:500;font-size:13px;letter-spacing:.06em;color:var(--ink-2);direction:ltr}
+  .tagline{font-family:"Montserrat",sans-serif;font-weight:500;font-size:13px;letter-spacing:.06em;color:var(--ink-2);direction:ltr;white-space:nowrap;display:inline-block}
 
   /* order CTA */
   .cta{
@@ -171,7 +171,7 @@
   /* short screens: tighten so everything stays visible */
   @media (max-height:780px){
     .branch .go{width:28px;height:28px}
-    .wrap{gap:10px;padding-top:12px}
+    .wrap{gap:9px;padding-top:calc(env(safe-area-inset-top) + 28px)}
     .hero img{width:120px;margin-bottom:3px}
     .cta{padding:9px 12px}.cta .ico{width:40px;height:40px}
     .app{width:52px}
@@ -317,6 +317,19 @@ function render(){
 
 
 render();
+
+// يخلي "Where the scene starts" بنفس عرض الشعار على أي شاشة
+function fitTagline(){
+  const img = document.querySelector('.hero img'), t = document.querySelector('.tagline');
+  if (!img || !t || !img.offsetWidth) return;
+  t.style.fontSize = '13px';
+  const k = img.offsetWidth / t.offsetWidth;
+  t.style.fontSize = (13 * k).toFixed(2) + 'px';
+}
+window.addEventListener('load', fitTagline);
+window.addEventListener('resize', fitTagline);
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitTagline);
+document.querySelector('.hero img').addEventListener('load', fitTagline);
 </script>
 </body>
 </html>
