@@ -85,7 +85,34 @@
 
   /* free delivery line + apps */
   .free{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;white-space:nowrap}
-  .free svg{flex:none;width:28px;height:28px;color:var(--gold);transform:scaleX(-1)}
+  .free svg{width:28px;height:28px;color:var(--gold);transform:scaleX(-1);display:block}
+  /* scooter rides in place with speed lines behind it */
+  .scooter{position:relative;flex:none;animation:ride 1.6s ease-in-out infinite}
+  .scooter i{position:absolute;right:-9px;height:2px;border-radius:2px;background:var(--gold);opacity:0;animation:speed 1.2s linear infinite}
+  .scooter i:nth-of-type(1){top:9px;width:8px}
+  .scooter i:nth-of-type(2){top:14px;width:11px;animation-delay:.4s}
+  .scooter i:nth-of-type(3){top:19px;width:7px;animation-delay:.8s}
+  @keyframes ride{0%,100%{transform:translateY(0)}50%{transform:translateY(-1.5px)}}
+  @keyframes speed{0%{transform:translateX(-4px);opacity:0}30%{opacity:.7}100%{transform:translateX(8px);opacity:0}}
+  /* shine sweeping across the sentence */
+  .ftxt{
+    background:linear-gradient(100deg,var(--ink) 0%,var(--ink) 34%,#C58A3E 44%,#F3CF8E 50%,#C58A3E 56%,var(--ink) 66%,var(--ink) 100%);
+    background-size:300% 100%;background-position:100% 0;
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:shine 3.2s ease-in-out infinite;
+  }
+  @keyframes shine{0%{background-position:100% 0}55%,100%{background-position:0 0}}
+  /* the highlighted word: warm gold with a flowing wavy underline */
+  .hl{
+    font-weight:700;position:relative;padding-bottom:5px;
+    background:linear-gradient(180deg,#C58A3E,#9C6526);-webkit-background-clip:text;background-clip:text;color:transparent;
+  }
+  .hl::after{
+    content:"";position:absolute;left:-2px;right:-2px;bottom:-2px;height:6px;
+    background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='6' viewBox='0 0 20 6'%3E%3Cpath d='M0 3 Q5 0 10 3 T20 3' fill='none' stroke='%23C58A3E' stroke-width='1.8' stroke-linecap='round'/%3E%3C/svg%3E") repeat-x 0 0/20px 6px;
+    animation:wave 1.4s linear infinite;
+  }
+  @keyframes wave{to{background-position:-20px 0}}
   .apps{display:flex;justify-content:center;gap:clamp(10px,3.5vw,16px)}
   .app{
     width:clamp(54px,15vw,64px);aspect-ratio:1;border-radius:23%;overflow:hidden;display:grid;place-items:center;
@@ -134,7 +161,8 @@
   @keyframes in{to{opacity:1;transform:none}}
   @media (prefers-reduced-motion:reduce){
     .in{animation:none;opacity:1;transform:none}
-    .glow,.glyph,.dot{animation:none}
+    .glow,.glyph,.dot,.scooter,.scooter i,.ftxt,.hl::after{animation:none}
+    .ftxt{background:none;color:var(--ink)}
   }
   a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 
@@ -169,11 +197,12 @@ const CONFIG = {
   // تطبيق متجر ستيج (اوردر)
   order: {
     title: "اطلب من تطبيق ستيج",
-    sub: "استمتع بعروضنا المميزة، واجمع نقاط مع طلباتك",
+    sub: "عروض مميزة، كسب نقاط، طلب مسبق",
     url: "https://stage.order.sa/app"
   },
 
-  freeDelivery: "التوصيل مجاني في جميع تطبيقات التوصيل",
+  // الكلمة بين [ ] تتلوّن ويصير تحتها خط متموج
+  freeDelivery: "التوصيل [مجاني] في جميع تطبيقات التوصيل",
 
   // تطبيقات التوصيل: الرابط يفتح متجر التطبيقات حسب جهاز العميل
   // ios = رقم التطبيق في App Store · android = رابط Google Play
@@ -258,7 +287,7 @@ function render(){
     </div>
 
     <section ${anim()}>
-      <p class="free">${I.scooter}<span>${esc(c.freeDelivery)}</span></p>
+      <p class="free"><span class="scooter">${I.scooter}<i></i><i></i><i></i></span><span class="ftxt">${esc(c.freeDelivery).replace(/\[(.+?)\]/, '<b class="hl">$1</b>')}</span></p>
       <div class="apps">${apps}</div>
     </section>
 
