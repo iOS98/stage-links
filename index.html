@@ -2,123 +2,156 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ستيج كافيه | روابطنا</title>
-<meta name="description" content="اطلب من تطبيق ستيج، أو من تطبيقات التوصيل بتوصيل مجاني، وتابعنا، واعرف مواقع فروعنا.">
-<meta name="theme-color" content="#21160F">
-<meta property="og:title" content="ستيج كافيه | روابطنا">
+<meta name="description" content="اطلب من تطبيق ستيج أو من تطبيقات التوصيل بتوصيل مجاني، وتابعنا، واعرف مواقع فروعنا.">
+<meta name="theme-color" content="#F7E7D7">
+<meta property="og:title" content="ستيج كافيه | Where the scene starts">
 <meta property="og:description" content="التوصيل مجاني في جميع تطبيقات التوصيل · مواقع فروع ستيج">
 <meta property="og:image" content="assets/icon-512.png">
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=Montserrat:wght@500&display=swap" rel="stylesheet">
 <style>
   :root{
-    --cream:#F7E7D7;
-    --espresso:#21160F;
-    --card:#33241A;
-    --card-hi:#3E2C20;
-    --line:rgba(247,231,215,.12);
-    --gold:#C9A36A;
-    --gold-2:#E2C08A;
-    --muted:rgba(247,231,215,.62);
-    --radius:18px;
+    --bg:#F7E7D7;
+    --bg-2:#FBF3EA;
+    --ink:#24130F;
+    --ink-2:#5E4536;
+    --muted:rgba(36,19,15,.58);
+    --card:rgba(255,252,248,.72);
+    --card-hi:rgba(255,252,248,.95);
+    --line:rgba(36,19,15,.09);
+    --gold:#B98A4E;
+    --radius:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{-webkit-text-size-adjust:100%}
   body{
     font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
-    background:var(--espresso);color:var(--cream);min-height:100vh;line-height:1.55;
-    background-image:radial-gradient(120% 55% at 50% -10%, rgba(201,163,106,.22), transparent 60%);
-    background-repeat:no-repeat;
+    color:var(--ink);line-height:1.5;min-height:100vh;min-height:100svh;
+    background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg) 70%);
+    overflow-x:hidden;
   }
-  a{color:inherit;text-decoration:none}
-  .wrap{max-width:480px;margin:0 auto;padding:44px 18px 32px}
+  a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
 
-  /* hero */
-  .hero{text-align:center;margin-bottom:28px}
-  .hero img{width:200px;max-width:58%;height:auto;display:block;margin:0 auto 14px}
-  .tagline{color:var(--muted);font-size:15px}
+  /* ---------- faint moving background ---------- */
+  .bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  .glow{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55}
+  .glow.g1{width:280px;height:280px;background:#EBC99B;top:-90px;inset-inline-end:-80px;animation:drift1 26s ease-in-out infinite}
+  .glow.g2{width:240px;height:240px;background:#F0D9C0;bottom:-70px;inset-inline-start:-70px;animation:drift2 30s ease-in-out infinite}
+  .glyph{position:absolute;background:url(assets/glyph.png) center/contain no-repeat;opacity:.05}
+  .glyph.a{width:150px;height:156px;top:6%;inset-inline-start:-38px;transform:rotate(-12deg);animation:float1 22s ease-in-out infinite}
+  .glyph.b{width:90px;height:94px;top:47%;inset-inline-end:-22px;transform:rotate(14deg);animation:float2 26s ease-in-out infinite}
+  .glyph.c{width:120px;height:125px;bottom:4%;inset-inline-start:18%;opacity:.035;animation:float1 32s ease-in-out infinite reverse}
+  .dot{position:absolute;width:7px;height:7px;border-radius:50%;background:var(--gold);opacity:.18;animation:rise 18s linear infinite}
+  .dot.d1{left:12%;animation-delay:-2s}.dot.d2{left:38%;width:5px;height:5px;animation-delay:-9s;animation-duration:22s}
+  .dot.d3{left:66%;animation-delay:-5s;animation-duration:20s}.dot.d4{left:86%;width:5px;height:5px;animation-delay:-14s}
+  @keyframes drift1{50%{transform:translate(-40px,50px) scale(1.08)}}
+  @keyframes drift2{50%{transform:translate(50px,-40px) scale(1.1)}}
+  @keyframes float1{50%{transform:translateY(-22px) rotate(-6deg)}}
+  @keyframes float2{50%{transform:translateY(18px) rotate(20deg)}}
+  @keyframes rise{from{top:105%;opacity:0}15%{opacity:.18}85%{opacity:.18}to{top:-5%;opacity:0}}
 
-  /* primary CTA */
+  /* ---------- layout: fits one phone screen ---------- */
+  .wrap{
+    position:relative;z-index:1;max-width:440px;margin:0 auto;
+    min-height:100vh;min-height:100svh;
+    display:flex;flex-direction:column;justify-content:center;
+    padding:max(18px,env(safe-area-inset-top)) 16px max(14px,env(safe-area-inset-bottom));
+    gap:clamp(12px,2.3vh,20px);
+  }
+
+  .hero{text-align:center}
+  .hero img{width:clamp(130px,38vw,165px);height:auto;display:block;margin:0 auto 6px}
+  .tagline{font-family:"Montserrat",sans-serif;font-weight:500;font-size:13px;letter-spacing:.06em;color:var(--ink-2);direction:ltr}
+
+  /* order CTA */
   .cta{
-    display:flex;align-items:center;gap:14px;background:var(--cream);color:var(--espresso);
-    border-radius:var(--radius);padding:18px;margin-bottom:30px;
-    box-shadow:0 12px 34px rgba(0,0,0,.35);transition:transform .15s ease;
+    display:flex;align-items:center;gap:12px;background:var(--ink);color:var(--bg);
+    border-radius:var(--radius);padding:11px 14px;
+    box-shadow:0 10px 26px rgba(36,19,15,.22);transition:transform .15s ease;
   }
   .cta:hover{transform:translateY(-2px)}
   .cta:active{transform:scale(.985)}
-  .cta .ico{flex:none;width:52px;height:52px;border-radius:14px;overflow:hidden;background:var(--espresso)}
+  .cta .ico{flex:none;width:44px;height:44px;border-radius:12px;overflow:hidden}
   .cta .ico img{width:100%;height:100%;display:block}
   .cta .txt{flex:1;min-width:0}
-  .cta .t1{display:block;font-size:18px;font-weight:700;line-height:1.3}
-  .cta .t2{display:block;font-size:13px;color:#5b4434;margin-top:2px}
-  .cta .arrow{flex:none;width:22px;height:22px;opacity:.7}
+  .cta .t1{display:block;font-size:16.5px;font-weight:700;line-height:1.35}
+  .cta .t2{display:block;font-size:12.5px;opacity:.75}
+  .cta .arrow{flex:none;width:20px;height:20px;opacity:.7}
 
-  /* section titles */
-  h2{font-size:14px;font-weight:600;color:var(--gold-2);margin:0 4px 12px;display:flex;align-items:center;gap:10px}
-  h2::after{content:"";flex:1;height:1px;background:var(--line)}
-  section{margin-bottom:30px}
-
-  /* free delivery ribbon */
-  .ribbon{
-    display:flex;align-items:center;gap:12px;
-    background:linear-gradient(135deg,var(--gold-2),var(--gold));color:var(--espresso);
-    border-radius:var(--radius);padding:14px 16px;margin-bottom:14px;
-    box-shadow:0 10px 30px rgba(201,163,106,.22);
-  }
-  .ribbon svg{flex:none;width:34px;height:34px}
-  .ribbon strong{display:block;font-size:17px;font-weight:700;line-height:1.3}
-  .ribbon span{font-size:13px;opacity:.8}
-
-  /* delivery apps — one row, logos only */
-  .apps{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+  /* free delivery line + apps */
+  .free{display:flex;align-items:center;justify-content:center;gap:8px;font-size:14px;font-weight:600;color:var(--ink);margin-bottom:10px;white-space:nowrap}
+  .free svg{flex:none;width:28px;height:28px;color:var(--gold);transform:scaleX(-1)}
+  .apps{display:flex;justify-content:center;gap:clamp(10px,3.5vw,16px)}
   .app{
-    aspect-ratio:1;border-radius:22%;overflow:hidden;display:grid;place-items:center;
-    background:var(--card);border:1px solid var(--line);
-    box-shadow:0 8px 22px rgba(0,0,0,.3);transition:transform .15s ease;
+    width:clamp(54px,15vw,64px);aspect-ratio:1;border-radius:23%;overflow:hidden;display:grid;place-items:center;
+    background:#fff;box-shadow:0 6px 16px rgba(36,19,15,.14);transition:transform .15s ease;
   }
   .app:hover{transform:translateY(-3px)}
-  .app:active{transform:scale(.95)}
+  .app:active{transform:scale(.94)}
   .app img{width:100%;height:100%;object-fit:cover;display:block}
-  .app .fallback{font-weight:700;font-size:22px;color:#fff;width:100%;height:100%;display:grid;place-items:center}
+  .app .fallback{font-weight:700;font-size:20px;color:#fff;width:100%;height:100%;display:grid;place-items:center}
 
   /* socials */
-  .socials{display:flex;justify-content:center;gap:14px}
+  .socials{display:flex;justify-content:center;gap:12px}
   .social{
-    width:54px;height:54px;border-radius:50%;display:grid;place-items:center;
-    background:var(--card);border:1px solid var(--line);color:var(--cream);
+    width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
+    background:var(--card);border:1px solid var(--line);color:var(--ink);
     transition:background .15s ease, transform .15s ease;
   }
   .social:hover{background:var(--card-hi);transform:translateY(-2px)}
-  .social svg{width:23px;height:23px;fill:currentColor}
+  .social svg{width:19px;height:19px;fill:currentColor}
 
   /* branches */
-  .city{margin-bottom:14px}
-  .city-name{font-size:13px;color:var(--muted);margin:0 4px 8px}
+  .label{font-size:12.5px;font-weight:600;color:var(--muted);margin:0 4px 7px;display:flex;align-items:center;gap:10px}
+  .label::after{content:"";flex:1;height:1px;background:var(--line)}
+  .branches{display:flex;flex-direction:column;gap:7px}
   .branch{
-    display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
-    border-radius:var(--radius);padding:12px 12px 12px 14px;margin-bottom:8px;transition:background .15s ease;
+    display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:8px 8px 8px 12px;
+    -webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);transition:background .15s ease;
   }
   .branch:hover{background:var(--card-hi)}
-  .branch .pin{flex:none;width:38px;height:38px;border-radius:50%;background:rgba(247,231,215,.08);display:grid;place-items:center;color:var(--gold-2)}
-  .branch .pin svg{width:20px;height:20px}
-  .branch .info{flex:1;min-width:0}
-  .branch .bname{display:block;font-weight:600;font-size:15.5px;line-height:1.3}
-  .branch .bsub{display:block;font-size:12.5px;color:var(--muted)}
-  .branch .map{flex:none;font-size:13px;font-weight:600;background:var(--cream);color:var(--espresso);border-radius:999px;padding:8px 14px}
+  .branch .pin{flex:none;width:32px;height:32px;border-radius:50%;background:rgba(185,138,78,.13);display:grid;place-items:center;color:var(--gold)}
+  .branch .pin svg{width:17px;height:17px}
+  .branch .info{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .branch .bname{font-weight:600;font-size:14.5px}
+  .branch .bsub{font-size:12px;color:var(--muted);margin-inline-start:4px}
+  .branch .map{flex:none;font-size:12.5px;font-weight:600;background:var(--ink);color:var(--bg);border-radius:999px;padding:6px 13px}
 
-  footer{text-align:center;color:var(--muted);font-size:12.5px;margin-top:8px}
+  footer{text-align:center;color:var(--muted);font-size:11px}
 
-  .rise{opacity:0;transform:translateY(10px);animation:rise .55s cubic-bezier(.2,.7,.2,1) forwards}
-  @keyframes rise{to{opacity:1;transform:none}}
-  @media (prefers-reduced-motion:reduce){.rise{animation:none;opacity:1;transform:none}}
-  a:focus-visible{outline:2px solid var(--gold-2);outline-offset:3px}
+  /* entrance */
+  .in{opacity:0;transform:translateY(8px);animation:in .5s cubic-bezier(.2,.7,.2,1) forwards}
+  @keyframes in{to{opacity:1;transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .in{animation:none;opacity:1;transform:none}
+    .glow,.glyph,.dot{animation:none}
+  }
+  a:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+
+  /* short screens: tighten so everything stays visible */
+  @media (max-height:700px){
+    .wrap{gap:10px;padding-top:12px}
+    .hero img{width:120px;margin-bottom:3px}
+    .cta{padding:9px 12px}.cta .ico{width:40px;height:40px}
+    .app{width:52px}
+    .social{width:38px;height:38px}
+    .branch{padding:6px 6px 6px 10px}.branch .pin{width:28px;height:28px}
+    footer{display:none}
+  }
 </style>
 </head>
 <body>
+<div class="bg" aria-hidden="true">
+  <span class="glow g1"></span><span class="glow g2"></span>
+  <span class="glyph a"></span><span class="glyph b"></span><span class="glyph c"></span>
+  <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="dot d4"></span>
+</div>
 <main class="wrap" id="app"></main>
 
 <script>
@@ -126,16 +159,16 @@
    إعدادات الصفحة — كل الروابط والأسماء هنا
    ========================================================= */
 const CONFIG = {
-  tagline: "قهوتك وحلاك المفضل، أقرب لك",
+  tagline: "Where the scene starts",
 
   // تطبيق متجر ستيج (اوردر)
   order: {
     title: "اطلب من تطبيق ستيج",
-    sub: "حمّل التطبيق واجمع نقاط الولاء مع كل طلب",
+    sub: "استمتع بعروضنا المميزة، واجمع نقاط مع طلباتك",
     url: "https://stage.order.sa/app"
   },
 
-  freeDelivery: { title: "التوصيل مجاني", sub: "في جميع تطبيقات التوصيل" },
+  freeDelivery: "التوصيل مجاني في جميع تطبيقات التوصيل",
 
   // تطبيقات التوصيل: الرابط يفتح متجر التطبيقات حسب جهاز العميل
   // ios = رقم التطبيق في App Store · android = رابط Google Play
@@ -143,7 +176,7 @@ const CONFIG = {
   apps: [
     { name: "هنقرستيشن", ios: "596011949",  android: "https://play.google.com/store/apps/details?id=com.hungerstation.android.web", letter:"هـ", color:"#F5C400" },
     { name: "جاهز",      ios: "1137352156", android: "https://play.google.com/store/apps/details?id=net.jahez",                     letter:"ج",  color:"#C8102E" },
-    { name: "نينجا",     ios: "1620153149", android: "https://play.google.com/store/apps/developer?id=Ana+Ninja",                   letter:"ن",  color:"#4B2BD6" },
+    { name: "نينجا",     ios: "1620153149", android: "https://play.google.com/store/apps/developer?id=Ana+Ninja",                   letter:"ن",  color:"#111111" },
     { name: "كيتا",      ios: "1662451643", android: "https://play.google.com/store/apps/details?id=com.sankuai.sailor.afooddelivery", letter:"ك", color:"#FFC300" }
   ],
 
@@ -152,12 +185,13 @@ const CONFIG = {
     { name: "تيك توك",  icon: "tiktok",    url: "https://www.tiktok.com/@stagecafe.sa" }
   ],
 
+  // name = النص العريض · sub = النص الصغير بنفس السطر
   branches: [
-    { city: "الرياض",     name: "فرع الرياض",                 sub: "",                         url: "https://maps.app.goo.gl/B3dyVqzitF3tAx3RA" },
-    { city: "حفر الباطن", name: "فرع البلدية",                sub: "حي البلدية · طريق عثمان بن عفان",   url: "https://maps.app.goo.gl/iwYbNKqGSu35mCDo9" },
-    { city: "حفر الباطن", name: "فرع الفيصلية",               sub: "حي الفيصلية · طريق الملك عبدالعزيز", url: "https://maps.app.goo.gl/Yu7XTqRxH2bfpER28" },
-    { city: "القيصومة",   name: "فرع القيصومة",               sub: "",                       url: "https://maps.app.goo.gl/AfqCqZYbgwx82NCx5" },
-    { city: "رفحاء",      name: "فرع رفحاء",                  sub: "",                          url: "https://maps.app.goo.gl/EgvXvMrAovibvV6L6" }
+    { name: "فرع الرياض",          sub: "(حي الملك فهد)",   url: "https://maps.app.goo.gl/B3dyVqzitF3tAx3RA" },
+    { name: "طريق عثمان بن عفان",   sub: "(حي البلدية)",     url: "https://maps.app.goo.gl/iwYbNKqGSu35mCDo9" },
+    { name: "طريق الملك عبدالعزيز", sub: "(حي الفيصلية)",    url: "https://maps.app.goo.gl/Yu7XTqRxH2bfpER28" },
+    { name: "القيصومة",            sub: "",                 url: "https://maps.app.goo.gl/AfqCqZYbgwx82NCx5" },
+    { name: "طريق سعود بن جلوي",    sub: "(حي الجميماء)",    url: "https://maps.app.goo.gl/EgvXvMrAovibvV6L6" }
   ]
 };
 /* ========================================================= */
@@ -167,8 +201,9 @@ const ICONS = {
   tiktok: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>'
 };
 const I = {
-  truck:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 17V6a1 1 0 0 0-1-1H3a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h1"/><path d="M14 9h4l3 3.5V16a1 1 0 0 1-1 1h-1"/><circle cx="7" cy="17.5" r="1.8"/><circle cx="17" cy="17.5" r="1.8"/><path d="M9 17.5h6"/></svg>',
-  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+  // دباب توصيل
+  scooter:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="9" height="8" rx="1.5"/><path d="M7.5 16v2.5h9.5l3-6.5h3.5"/><path d="M20 12l-2-5h-3"/><circle cx="8" cy="23" r="3"/><circle cx="24" cy="23" r="3"/><path d="M11 23h10"/><path d="M23.5 12l1.8 8"/></svg>',
+  pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
   arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>'
 };
 
@@ -177,13 +212,12 @@ const ext = url => `href="${esc(url)}" target="_blank" rel="noopener"`;
 
 // نوع جهاز العميل
 const ua = navigator.userAgent || "";
-const IS_IOS = /iPad|iPhone|iPod/.test(ua) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
 const IS_ANDROID = /Android/i.test(ua);
 const appLink = a => IS_ANDROID ? a.android : `https://apps.apple.com/sa/app/id${a.ios}`;
 
 function render(){
   const c = CONFIG; let d = 0;
-  const r = () => `class="rise" style="animation-delay:${(d++)*60}ms"`;
+  const anim = () => `class="in" style="animation-delay:${(d++)*55}ms"`;
 
   const apps = c.apps.map((a,i) => `
     <a class="app" data-i="${i}" ${ext(appLink(a))} aria-label="${esc(a.name)}" title="${esc(a.name)}">
@@ -194,25 +228,22 @@ function render(){
   const socials = c.socials.map(s => `
     <a class="social" ${ext(s.url)} aria-label="${esc(s.name)}" title="${esc(s.name)}">${ICONS[s.icon]||''}</a>`).join('');
 
-  const cities = [...new Set(c.branches.map(b => b.city))];
-  const branches = cities.map(city => `
-    <div class="city">
-      <div class="city-name">${esc(city)}</div>
-      ${c.branches.filter(b => b.city === city).map(b => `
-        <a class="branch" ${ext(b.url)}>
-          <span class="pin">${I.pin}</span>
-          <span class="info"><span class="bname">${esc(b.name)}</span>${b.sub ? `<span class="bsub">${esc(b.sub)}</span>` : ""}</span>
-          <span class="map">الموقع</span>
-        </a>`).join('')}
-    </div>`).join('');
+  const branches = c.branches.map(b => `
+    <a class="branch" ${ext(b.url)}>
+      <span class="pin">${I.pin}</span>
+      <span class="info"><span class="bname">${esc(b.name)}</span>${b.sub ? `<span class="bsub">${esc(b.sub)}</span>` : ''}</span>
+      <span class="map">الموقع</span>
+    </a>`).join('');
 
   document.getElementById('app').innerHTML = `
-    <header class="hero">
-      <img ${r()} src="assets/stage-wordmark.png" alt="STAGE ستيج كافيه" width="560" height="166">
-      <p class="tagline rise" style="animation-delay:${(d++)*60}ms">${esc(c.tagline)}</p>
+    <header ${anim()}>
+      <div class="hero">
+        <img src="assets/stage-wordmark-dark.png" alt="STAGE ستيج كافيه" width="560" height="159">
+        <p class="tagline">${esc(c.tagline)}</p>
+      </div>
     </header>
 
-    <div ${r()}>
+    <div ${anim()}>
       <a class="cta" ${ext(c.order.url)}>
         <span class="ico"><img src="assets/apple-touch-icon.png" alt=""></span>
         <span class="txt"><span class="t1">${esc(c.order.title)}</span><span class="t2">${esc(c.order.sub)}</span></span>
@@ -220,28 +251,26 @@ function render(){
       </a>
     </div>
 
-    <section ${r()}>
-      <h2>تطبيقات التوصيل</h2>
-      <div class="ribbon">${I.truck}<div><strong>${esc(c.freeDelivery.title)}</strong><span>${esc(c.freeDelivery.sub)}</span></div></div>
+    <section ${anim()}>
+      <p class="free">${I.scooter}<span>${esc(c.freeDelivery)}</span></p>
       <div class="apps">${apps}</div>
     </section>
 
-    <section ${r()}>
-      <h2>تابعنا</h2>
+    <section ${anim()}>
       <div class="socials">${socials}</div>
     </section>
 
-    <section ${r()}>
-      <h2>فروعنا</h2>
-      ${branches}
+    <section ${anim()}>
+      <p class="label">فروعنا</p>
+      <div class="branches">${branches}</div>
     </section>
 
-    <footer ${r()}>© ${new Date().getFullYear()} ستيج كافيه</footer>
+    <footer ${anim()}>© ${new Date().getFullYear()} ستيج كافيه</footer>
   `;
   loadStoreIcons();
 }
 
-// أيقونات التطبيقات الرسمية من App Store (عبر Apple Search API) — إذا ما تحملت تبقى الأيقونة البديلة
+// أيقونات التطبيقات الرسمية من App Store (Apple Search API) — إذا ما تحملت تبقى الأيقونة البديلة
 function loadStoreIcons(){
   CONFIG.apps.forEach((a, i) => {
     if (a.icon || !a.ios) return;
@@ -250,11 +279,12 @@ function loadStoreIcons(){
       try{
         const res = data && data.results && data.results[0];
         const src = res && (res.artworkUrl512 || res.artworkUrl100);
-        if (!src) return;
-        const img = new Image();
-        img.alt = a.name;
-        img.onload = () => { const el = document.querySelector(`.app[data-i="${i}"]`); if (el) el.replaceChildren(img); };
-        img.src = src;
+        if (src){
+          const img = new Image();
+          img.alt = a.name;
+          img.onload = () => { const el = document.querySelector(`.app[data-i="${i}"]`); if (el) el.replaceChildren(img); };
+          img.src = src;
+        }
       }catch(e){}
       try{ delete window[cb]; }catch(e){}
     };
