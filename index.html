@@ -94,10 +94,12 @@
   .app:hover{transform:translateY(-3px)}
   .app:active{transform:scale(.94)}
   .app img{width:100%;height:100%;object-fit:cover;display:block}
+  .app{border:1px solid rgba(36,19,15,.06)}
   .app .fallback{font-weight:700;font-size:20px;color:#fff;width:100%;height:100%;display:grid;place-items:center}
 
   /* socials */
-  .socials{display:flex;justify-content:center;gap:12px}
+  .socials{display:flex;justify-content:center;align-items:center;gap:10px}
+  .socials .stxt{font-size:13.5px;font-weight:600;color:var(--ink-2);white-space:nowrap}
   .social{
     width:42px;height:42px;border-radius:50%;display:grid;place-items:center;
     background:var(--card);border:1px solid var(--line);color:var(--ink);
@@ -118,10 +120,12 @@
   .branch:hover{background:var(--card-hi)}
   .branch .pin{flex:none;width:32px;height:32px;border-radius:50%;background:rgba(185,138,78,.13);display:grid;place-items:center;color:var(--gold)}
   .branch .pin svg{width:17px;height:17px}
-  .branch .info{flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .branch .info{flex:1;min-width:0;display:flex;align-items:baseline;gap:6px;white-space:nowrap;overflow:hidden}
   .branch .bname{font-weight:600;font-size:14.5px}
-  .branch .bsub{font-size:12px;color:var(--muted);margin-inline-start:4px}
-  .branch .map{flex:none;font-size:12.5px;font-weight:600;background:var(--ink);color:var(--bg);border-radius:999px;padding:6px 13px}
+  .branch .bsub{font-size:12px;color:var(--muted);overflow:hidden;text-overflow:ellipsis}
+  .branch .go{flex:none;width:32px;height:32px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;transition:transform .15s ease}
+  .branch .go svg{width:17px;height:17px}
+  .branch:hover .go{transform:translateX(-3px)}
 
   footer{text-align:center;color:var(--muted);font-size:11px}
 
@@ -136,6 +140,7 @@
 
   /* short screens: tighten so everything stays visible */
   @media (max-height:700px){
+    .branch .go{width:28px;height:28px}
     .wrap{gap:10px;padding-top:12px}
     .hero img{width:120px;margin-bottom:3px}
     .cta{padding:9px 12px}.cta .ico{width:40px;height:40px}
@@ -174,10 +179,10 @@ const CONFIG = {
   // ios = رقم التطبيق في App Store · android = رابط Google Play
   // icon = (اختياري) مسار ملف شعار رسمي، مثال: "assets/apps/jahez.png"
   apps: [
-    { name: "هنقرستيشن", ios: "596011949",  android: "https://play.google.com/store/apps/details?id=com.hungerstation.android.web", letter:"هـ", color:"#F5C400" },
-    { name: "جاهز",      ios: "1137352156", android: "https://play.google.com/store/apps/details?id=net.jahez",                     letter:"ج",  color:"#C8102E" },
-    { name: "نينجا",     ios: "1620153149", android: "https://play.google.com/store/apps/developer?id=Ana+Ninja",                   letter:"ن",  color:"#111111" },
-    { name: "كيتا",      ios: "1662451643", android: "https://play.google.com/store/apps/details?id=com.sankuai.sailor.afooddelivery", letter:"ك", color:"#FFC300" }
+    { name: "هنقرستيشن", ios: "596011949", icon: "assets/apps/hungerstation.jpg",  android: "https://play.google.com/store/apps/details?id=com.hungerstation.android.web", letter:"هـ", color:"#F5C400" },
+    { name: "جاهز",      ios: "1137352156", icon: "assets/apps/jahez.jpg", android: "https://play.google.com/store/apps/details?id=net.jahez",                     letter:"ج",  color:"#C8102E" },
+    { name: "نينجا",     ios: "1620153149", icon: "assets/apps/ninja.jpg", android: "https://play.google.com/store/apps/developer?id=Ana+Ninja",                   letter:"ن",  color:"#111111" },
+    { name: "كيتا",      ios: "1662451643", icon: "assets/apps/keeta.jpg", android: "https://play.google.com/store/apps/details?id=com.sankuai.sailor.afooddelivery", letter:"ك", color:"#FFC300" }
   ],
 
   socials: [
@@ -187,11 +192,11 @@ const CONFIG = {
 
   // name = النص العريض · sub = النص الصغير بنفس السطر
   branches: [
-    { name: "فرع الرياض",          sub: "(حي الملك فهد)",   url: "https://maps.app.goo.gl/B3dyVqzitF3tAx3RA" },
-    { name: "طريق عثمان بن عفان",   sub: "(حي البلدية)",     url: "https://maps.app.goo.gl/iwYbNKqGSu35mCDo9" },
-    { name: "طريق الملك عبدالعزيز", sub: "(حي الفيصلية)",    url: "https://maps.app.goo.gl/Yu7XTqRxH2bfpER28" },
+    { name: "الرياض",              sub: "حي الملك فهد",   url: "https://maps.app.goo.gl/B3dyVqzitF3tAx3RA" },
+    { name: "طريق عثمان بن عفان",   sub: "حي البلدية",     url: "https://maps.app.goo.gl/iwYbNKqGSu35mCDo9" },
+    { name: "طريق الملك عبدالعزيز", sub: "حي الفيصلية",    url: "https://maps.app.goo.gl/Yu7XTqRxH2bfpER28" },
     { name: "القيصومة",            sub: "",                 url: "https://maps.app.goo.gl/AfqCqZYbgwx82NCx5" },
-    { name: "طريق سعود بن جلوي",    sub: "(حي الجميماء)",    url: "https://maps.app.goo.gl/EgvXvMrAovibvV6L6" }
+    { name: "طريق سعود بن جلوي",    sub: "حي الجميماء",    url: "https://maps.app.goo.gl/EgvXvMrAovibvV6L6" }
   ]
 };
 /* ========================================================= */
@@ -204,6 +209,7 @@ const I = {
   // دباب توصيل
   scooter:'<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="8" width="9" height="8" rx="1.5"/><path d="M7.5 16v2.5h9.5l3-6.5h3.5"/><path d="M20 12l-2-5h-3"/><circle cx="8" cy="23" r="3"/><circle cx="24" cy="23" r="3"/><path d="M11 23h10"/><path d="M23.5 12l1.8 8"/></svg>',
   pin:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11.5a7 7 0 0 1 14 0C19 14.8 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg>',
+  go:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="M11 6l-6 6 6 6"/></svg>',
   arrow:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 6l-6 6 6 6"/></svg>'
 };
 
@@ -232,7 +238,7 @@ function render(){
     <a class="branch" ${ext(b.url)}>
       <span class="pin">${I.pin}</span>
       <span class="info"><span class="bname">${esc(b.name)}</span>${b.sub ? `<span class="bsub">${esc(b.sub)}</span>` : ''}</span>
-      <span class="map">الموقع</span>
+      <span class="go" aria-label="الموقع">${I.go}</span>
     </a>`).join('');
 
   document.getElementById('app').innerHTML = `
@@ -257,7 +263,7 @@ function render(){
     </section>
 
     <section ${anim()}>
-      <div class="socials">${socials}</div>
+      <div class="socials"><span class="stxt">تابع عروضنا</span>${socials}<span class="stxt">وشاركنا تجربتك</span></div>
     </section>
 
     <section ${anim()}>
@@ -267,33 +273,8 @@ function render(){
 
     <footer ${anim()}>© ${new Date().getFullYear()} ستيج كافيه</footer>
   `;
-  loadStoreIcons();
 }
 
-// أيقونات التطبيقات الرسمية من App Store (Apple Search API) — إذا ما تحملت تبقى الأيقونة البديلة
-function loadStoreIcons(){
-  CONFIG.apps.forEach((a, i) => {
-    if (a.icon || !a.ios) return;
-    const cb = "__appIcon" + i;
-    window[cb] = data => {
-      try{
-        const res = data && data.results && data.results[0];
-        const src = res && (res.artworkUrl512 || res.artworkUrl100);
-        if (src){
-          const img = new Image();
-          img.alt = a.name;
-          img.onload = () => { const el = document.querySelector(`.app[data-i="${i}"]`); if (el) el.replaceChildren(img); };
-          img.src = src;
-        }
-      }catch(e){}
-      try{ delete window[cb]; }catch(e){}
-    };
-    const s = document.createElement('script');
-    s.src = `https://itunes.apple.com/lookup?id=${a.ios}&country=sa&callback=${cb}`;
-    s.async = true; s.onerror = () => s.remove();
-    document.head.appendChild(s);
-  });
-}
 
 render();
 </script>
