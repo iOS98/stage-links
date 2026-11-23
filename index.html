@@ -5,7 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>ستيج كافيه | روابطنا</title>
 <meta name="description" content="اطلب من تطبيق ستيج أو من تطبيقات التوصيل بتوصيل مجاني، وتابعنا، واعرف مواقع فروعنا.">
-<meta name="theme-color" content="#F7E7D7">
+<meta name="theme-color" content="#FBF3EA">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta property="og:title" content="ستيج كافيه | Where the scene starts">
 <meta property="og:description" content="التوصيل مجاني في جميع تطبيقات التوصيل · مواقع فروع ستيج">
 <meta property="og:image" content="assets/icon-512.png">
@@ -28,11 +29,11 @@
     --radius:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%}
+  html{-webkit-text-size-adjust:100%;min-height:100%;background:#F7E7D7 linear-gradient(180deg,#FBF3EA 0%,#F7E7D7 70%) no-repeat;background-size:100% 100%}
   body{
     font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
     color:var(--ink);line-height:1.5;min-height:100vh;min-height:100svh;
-    background:linear-gradient(180deg,var(--bg-2) 0%,var(--bg) 70%);
+    background:transparent;
     overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
@@ -156,7 +157,7 @@
   .branch .go svg{width:17px;height:17px}
   .branch:hover .go{transform:translateX(-3px)}
 
-  footer{text-align:center;color:var(--muted);font-size:11px}
+  footer{text-align:center;color:var(--muted);font-size:11px;line-height:1.2}
 
   /* entrance */
   .in{opacity:0;transform:translateY(8px);animation:in .5s cubic-bezier(.2,.7,.2,1) forwards}
@@ -177,7 +178,28 @@
     .app{width:52px}
     .social{width:38px;height:38px}
     .branch{padding:6px 6px 6px 10px}.branch .pin{width:28px;height:28px}
-    footer{display:none}
+  }
+  @media (max-height:650px){
+    .wrap{gap:7px;padding-top:calc(env(safe-area-inset-top) + 16px)}
+    .hero img{width:104px;margin-bottom:2px}
+    .cta{padding:7px 10px}.cta .ico{width:36px;height:36px}.cta .t1{font-size:15px}
+    .free{margin-bottom:6px}
+    .app{width:46px}
+    .social{width:34px;height:34px}.social svg{width:17px;height:17px}
+    .label{margin-bottom:5px}
+    .branches{gap:5px}
+    .branch{padding:4px 4px 4px 8px}.branch .pin{width:26px;height:26px}.branch .go{width:26px;height:26px}
+    .branch .bname{font-size:13.5px}
+  }
+  @media (max-height:570px){
+    .wrap{gap:5px;padding-top:calc(env(safe-area-inset-top) + 12px);padding-bottom:8px}
+    .hero img{width:92px}
+    .tagline{margin-bottom:0}
+    .cta{padding:6px 10px}.cta .ico{width:32px;height:32px}.cta .t2{font-size:11.5px}.cta .dl{padding:5px 11px;font-size:12px}
+    .free{font-size:13px}.free svg{width:24px;height:24px}
+    .app{width:42px}
+    .social{width:32px;height:32px}
+    .branch .pin{display:none}
   }
 </style>
 </head>
