@@ -125,6 +125,17 @@
   .app:active{transform:scale(.94)}
   .app img{width:100%;height:100%;object-fit:cover;display:block}
   .app{border:1px solid rgba(36,19,15,.06)}
+  /* city picker (only used when an app has a link per city) */
+  .sheet{position:fixed;inset:0;z-index:10;background:rgba(36,19,15,.35);display:flex;align-items:flex-end;justify-content:center;padding:12px;animation:fade .2s ease}
+  .sheet[hidden]{display:none}
+  .sheet-card{width:100%;max-width:440px;background:#FBF3EA;border-radius:20px;padding:16px;padding-bottom:max(16px,env(safe-area-inset-bottom));box-shadow:0 -10px 40px rgba(36,19,15,.25);animation:up .25s cubic-bezier(.2,.7,.2,1)}
+  .sheet-t{display:flex;align-items:center;gap:10px;font-weight:700;font-size:15px;margin-bottom:12px}
+  .sheet-t img{width:36px;height:36px;border-radius:10px}
+  .sheet-list{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .sheet-list a{background:#fff;border:1px solid var(--line);border-radius:12px;padding:11px;text-align:center;font-weight:600;font-size:14.5px}
+  .sheet-x{margin-top:10px;width:100%;border:0;background:transparent;font:inherit;color:var(--muted);padding:8px;cursor:pointer}
+  @keyframes fade{from{opacity:0}}
+  @keyframes up{from{transform:translateY(30px);opacity:0}}
   .app .fallback{font-weight:700;font-size:20px;color:#fff;width:100%;height:100%;display:grid;place-items:center}
 
   /* socials */
@@ -210,6 +221,7 @@
   <span class="dot d1"></span><span class="dot d2"></span><span class="dot d3"></span><span class="dot d4"></span>
 </div>
 <main class="wrap" id="app"></main>
+<div class="sheet" id="sheet" hidden><div class="sheet-card" role="dialog" aria-modal="true"><p class="sheet-t"></p><div class="sheet-list"></div><button class="sheet-x" type="button">إلغاء</button></div></div>
 
 <script>
 /* =========================================================
@@ -229,14 +241,18 @@ const CONFIG = {
   // الكلمة بين [ ] تتلوّن ويصير تحتها خط متموج
   freeDelivery: "التوصيل [مجاني] في جميع تطبيقات التوصيل",
 
-  // تطبيقات التوصيل: الرابط يفتح متجر التطبيقات حسب جهاز العميل
+  // تطبيقات التوصيل
+  // stage = رابط مشاركة صفحة ستيج من داخل التطبيق (يفتح ستيج في التطبيق مباشرة)
+  //   - رابط واحد:            stage: "https://..."
+  //   - رابط لكل مدينة:        stage: { "الرياض": "https://...", "حفر الباطن": "https://...", ... }
+  //     (يظهر للعميل اختيار المدينة أول)
+  //   - فاضي "":              يفتح متجر التطبيقات حسب الجهاز (ios / android)
   // ios = رقم التطبيق في App Store · android = رابط Google Play
-  // icon = (اختياري) مسار ملف شعار رسمي، مثال: "assets/apps/jahez.png"
   apps: [
-    { name: "هنقرستيشن", ios: "596011949", icon: "assets/apps/hungerstation.jpg",  android: "https://play.google.com/store/apps/details?id=com.hungerstation.android.web", letter:"هـ", color:"#F5C400" },
-    { name: "جاهز",      ios: "1137352156", icon: "assets/apps/jahez.jpg", android: "https://play.google.com/store/apps/details?id=net.jahez",                     letter:"ج",  color:"#C8102E" },
-    { name: "نينجا",     ios: "1620153149", icon: "assets/apps/ninja.jpg", android: "https://play.google.com/store/apps/developer?id=Ana+Ninja",                   letter:"ن",  color:"#111111" },
-    { name: "كيتا",      ios: "1662451643", icon: "assets/apps/keeta.jpg", android: "https://play.google.com/store/apps/details?id=com.sankuai.sailor.afooddelivery", letter:"ك", color:"#FFC300" }
+    { name: "هنقرستيشن", ios: "596011949", icon: "assets/apps/hungerstation.jpg", stage: "",  android: "https://play.google.com/store/apps/details?id=com.hungerstation.android.web", letter:"هـ", color:"#F5C400" },
+    { name: "جاهز",      ios: "1137352156", icon: "assets/apps/jahez.jpg", stage: "", android: "https://play.google.com/store/apps/details?id=net.jahez",                     letter:"ج",  color:"#C8102E" },
+    { name: "نينجا",     ios: "1620153149", icon: "assets/apps/ninja.jpg", stage: "", android: "https://play.google.com/store/apps/developer?id=Ana+Ninja",                   letter:"ن",  color:"#111111" },
+    { name: "كيتا",      ios: "1662451643", icon: "assets/apps/keeta.jpg", stage: "", android: "https://play.google.com/store/apps/details?id=com.sankuai.sailor.afooddelivery", letter:"ك", color:"#FFC300" }
   ],
 
   // واتساب: الرقم يظهر كما هو، والرابط بصيغة دولية
@@ -277,14 +293,16 @@ const ext = url => `href="${esc(url)}" target="_blank" rel="noopener"`;
 // نوع جهاز العميل
 const ua = navigator.userAgent || "";
 const IS_ANDROID = /Android/i.test(ua);
-const appLink = a => IS_ANDROID ? a.android : `https://apps.apple.com/sa/app/id${a.ios}`;
+const storeLink = a => IS_ANDROID ? a.android : `https://apps.apple.com/sa/app/id${a.ios}`;
+const perCity = a => a.stage && typeof a.stage === 'object' && Object.keys(a.stage).length > 0;
+const appLink = a => (typeof a.stage === 'string' && a.stage) ? a.stage : storeLink(a);
 
 function render(){
   const c = CONFIG; let d = 0;
   const anim = () => `class="in" style="animation-delay:${(d++)*55}ms"`;
 
   const apps = c.apps.map((a,i) => `
-    <a class="app" data-i="${i}" ${ext(appLink(a))} aria-label="${esc(a.name)}" title="${esc(a.name)}">
+    <a class="app" data-i="${i}" ${perCity(a) ? 'href="#" data-pick="1"' : ext(appLink(a))} aria-label="${esc(a.name)}" title="${esc(a.name)}">
       ${a.icon ? `<img src="${esc(a.icon)}" alt="${esc(a.name)}">`
                : `<span class="fallback" style="background:${esc(a.color)}">${esc(a.letter)}</span>`}
     </a>`).join('');
@@ -339,6 +357,24 @@ function render(){
 
 
 render();
+
+// اختيار المدينة لتطبيقات التوصيل اللي لها رابط لكل مدينة
+(function(){
+  const sheet = document.getElementById('sheet');
+  const close = () => sheet.hidden = true;
+  document.addEventListener('click', e => {
+    const el = e.target.closest('.app[data-pick]');
+    if (!el) return;
+    e.preventDefault();
+    const a = CONFIG.apps[+el.dataset.i];
+    sheet.querySelector('.sheet-t').innerHTML = `${a.icon ? `<img src="${esc(a.icon)}" alt="">` : ''}<span>اختر مدينتك في ${esc(a.name)}</span>`;
+    sheet.querySelector('.sheet-list').innerHTML = Object.entries(a.stage)
+      .map(([city, url]) => `<a ${ext(url)}>${esc(city)}</a>`).join('');
+    sheet.hidden = false;
+  });
+  sheet.addEventListener('click', e => { if (e.target === sheet || e.target.closest('.sheet-x') || e.target.closest('.sheet-list a')) close(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') close(); });
+})();
 
 // يخلي "Where the scene starts" بنفس عرض الشعار على أي شاشة
 function fitTagline(){
