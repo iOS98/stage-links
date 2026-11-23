@@ -29,17 +29,18 @@
     --radius:16px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{-webkit-text-size-adjust:100%;min-height:100%;background:#F7E7D7 linear-gradient(180deg,#FBF3EA 0%,#F7E7D7 70%) no-repeat;background-size:100% 100%}
+  html{-webkit-text-size-adjust:100%;min-height:100%;background-color:#F7E7D7}
   body{
     font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",Tahoma,sans-serif;
     color:var(--ink);line-height:1.5;min-height:100vh;min-height:100svh;
-    background:transparent;
+    background-color:#F7E7D7;
     overflow-x:hidden;
   }
   a{color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent}
 
   /* ---------- faint moving background ---------- */
-  .bg{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
+  /* solid page colour on a fixed full-screen layer: iPhone Safari tints its top/bottom bars from it */
+  .bg{position:fixed;top:0;left:0;right:0;bottom:0;height:100lvh;pointer-events:none;z-index:0;overflow:hidden;background:#F7E7D7 linear-gradient(180deg,#FBF3EA 0%,#F7E7D7 70%)}
   .glow{position:absolute;border-radius:50%;filter:blur(40px);opacity:.55}
   .glow.g1{width:280px;height:280px;background:#EBC99B;top:-90px;inset-inline-end:-80px;animation:drift1 26s ease-in-out infinite}
   .glow.g2{width:240px;height:240px;background:#F0D9C0;bottom:-70px;inset-inline-start:-70px;animation:drift2 30s ease-in-out infinite}
